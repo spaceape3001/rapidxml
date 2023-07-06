@@ -430,6 +430,14 @@ namespace rapidxml
                 node -> value(value);
             return node;
         }
+
+        //! Allocates a new cdata node
+        //! \param value Text
+        //! \return Pointer to the allocated node.  This pointer will never be NULL
+        xml_node<Ch> *allocate_cdata(string_view value=string_view())
+        {
+            return allocate_node(node_cdata, string_view(), value);
+        }
         
         //! Allocates a new named element
         //! \param name Name of the element
