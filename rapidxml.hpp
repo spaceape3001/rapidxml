@@ -1331,7 +1331,17 @@ namespace rapidxml
                 attribute->m_parent = 0;
             m_first_attribute = 0;
         }
+
+        //! Allocates & appends a new named element
+        //! \param name Name of the element
+        //! \return Pointer to the allocated element.  This pointer will never be NULL
+        xml_node<Ch> *create_element(string_view name=string_view(), string_view value=string_view());
         
+        //! Allocates & appends a new named attribute
+        //! \param name Name of the element
+        //! \return Pointer to the allocated element.  This pointer will never be NULL
+        xml_attribute<Ch> *create_attribute(string_view name=string_view(), string_view value=string_view());
+
     private:
 
         ///////////////////////////////////////////////////////////////////////////
@@ -2317,6 +2327,25 @@ namespace rapidxml
         }
 
     };
+
+    
+    template<class Ch>
+    xml_node<Ch> *xml_node<Ch>::create_element(string_view name, string_view value)
+    {
+        xml_document<Ch>*   doc = document();
+        xml_node<Ch> *      ret = doc->allocate_element(name, value);
+        append_node(ret);
+        return ret;
+    }
+
+    template<class Ch>
+    xml_attribute<Ch> *xml_node<Ch>::create_attribute(string_view name, string_view value)
+    {
+        xml_document<Ch>*       doc = document();
+        xml_attribute<Ch> *     ret = doc->allocate_attribute(name, value);
+        append_attribute(ret);
+        return ret;
+    }
 
     //! \cond internal
     namespace internal
